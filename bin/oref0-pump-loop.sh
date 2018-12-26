@@ -387,6 +387,9 @@ function preflight {
 
 # reset radio, init world wide pump (if applicable), mmtune, and wait_for_silence 60 if no signal
 function mmtune {
+    try_return openaps mmtune || return 1;
+    return
+
     # TODO: remove reset_spi_serial.py once oref0_init_pump_comms.py is fixed to do it correctly
     if [[ $port == "/dev/spidev5.1" ]]; then
         reset_spi_serial.py 2>/dev/null
@@ -433,6 +436,9 @@ function any_pump_comms {
 
 # listen for $1 seconds of silence (no other rigs talking to pump) before continuing
 function wait_for_silence {
+    try_return openaps wait-for-silence || return 1;
+    return
+
     if [ -z $1 ]; then
         waitfor=40
     else
