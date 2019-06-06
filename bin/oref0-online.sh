@@ -117,11 +117,9 @@ function bt_connect {
         if ! check_ip >/dev/null; then
             echo; echo "No Internet access detected, attempting to connect BT to $MAC"
             oref0-bluetoothup
-            sudo bt-pan client $MAC -d
-            for i in {1..3}
-            do
-                sudo bt-pan client $MAC && sudo dhclient bnep0
-            done
+            sudo bt-pan client -d $MAC
+            sudo bt-pan client $MAC
+            sudo dhclient bnep0
             if ifconfig | egrep -q "bnep0" >/dev/null; then
                 echo -n "Connected to Bluetooth with IP: "
                 print_local_ip bnep0
