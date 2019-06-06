@@ -112,6 +112,7 @@ case $i in
     ;;
     --btmac=*)
     BT_MAC="${i#*=}"
+    BT_MAC="${BT_MAC^^}"
     shift # past argument=value
     ;;
     -p=*|--btpeb=*)
@@ -301,7 +302,7 @@ if [[ -z "$DIR" || -z "$serial" ]]; then
     read -p "Do you want to be able to set up BT tethering? y/[N] " -r
     if [[ $REPLY =~ ^[Yy]$ ]]; then
     read -p "What is your phone's BT MAC address (i.e. AA:BB:CC:DD:EE:FF)? " -r
-        BT_MAC=$REPLY
+        BT_MAC=${REPLY^^}
         echo
         echocolor "Ok, $BT_MAC it is. You will need to follow directions in docs to set-up BT tether after your rig is successfully looping."
         echo
